@@ -1,0 +1,118 @@
+
+
+c24:
+  host: 172.28.193.8
+  port: 47254
+  timeout: 200
+  
+jpos:
+  channel-adapter-name: c24-channel-adapter
+  channel-in-space-key: c24-send
+  channel-out-space-key: c24-receive
+  link-name: c24link
+  channel-reconnect-delay: 200
+  qmux-name: c24-qmux
+  qmux-key: 41,11
+  logger-name: c24
+  unhandled-queue: c24-unhandled-queue  
+  
+  
+iso-msg:
+  bank-code: "026"
+  acquiring-institution-identification-code: 504432
+  card-acceptor-terminal-id: DBP
+  card-acceptor-identification: DBP111111111
+  card-acceptor-name-location: DBP222222222
+  delivery-channel: DBP
+  default-branch-id: 17203  
+  
+  
+cbs:
+  host: uatweb.ubi.com
+  url: https://uatweb.ubi.com:9443/FISERVLET/fihttp
+  port: 9443
+  timeout: 300000 
+  
+kafka-config:
+  bootstrap-servers: 172.27.204.72:9092
+  num-of-partitions: 3
+  replication-factor: 2
+kafka-producer-config:
+  key-serializer-class: org.apache.kafka.common.serialization.StringSerializer
+  value-serializer-class: org.apache.kafka.common.serialization.StringSerializer
+  compression-type: snappy
+  acks: all
+  batch-size: 16384
+  batch-size-boost-factor: 100
+  linger-ms: 5
+  request-timeout-ms: 60000
+  retry-count: 5
+kafka-consumer-config:
+  key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  auto-offset-reset: earliest
+  batch-listener: true
+  auto-startup: true
+  concurrency-level: 3
+  session-timeout-ms: 10000
+  heartbeat-interval-ms: 3000
+  max-poll-interval-ms: 300000
+  max-poll-records: 500
+  max-partition-fetch-bytes-default: 1048576
+  max-partition-fetch-bytes-boost-factor: 1
+  poll-timeout-ms: 150
+kafka-consumer-group-config:
+  user-command-service-group-id: user-command-service-consumer
+  user-command-service-reply-group-id: user-command-service-reply-topic-consumer
+ 
+user-command:
+  cifcreate-topic: depositaddacctdata
+  cifcreate-reply-topic: depositaddacctreplydata
+  cifcreate-reply-group-id: user-command-service-reply-topic-consumer
+
+
+
+
+  
+  
+resilience4j.circuitbreaker:
+configs:
+ default:
+   registerHealthIndicator: true
+   slidingWindowSize: 60000
+   slidingWindowType: TIME_BASED
+   permittedNumberOfCallsInHalfOpenState: 3
+   minimumNumberOfCalls: 10
+   waitDurationInOpenState: 5000
+   slowCallRateThreshold: 100
+   slowCallDurationThreshold: 2000
+   failureRateThreshold: 50
+ someShared:
+   slidingWindowSize: 50
+   permittedNumberOfCallsInHalfOpenState: 10
+
+instances:
+ balinqService:
+   baseConfig: default
+   waitDurationInOpenState: 2000
+   registerHealthIndicator: true
+ backendB:
+   baseConfig: someShared
+
+
+management.health.circuitbreakers.enabled: true
+
+management:
+  endpoint:
+    health:
+      show-details: always 
+  endpoints:
+    web:
+      exposure:
+        include: "*" 
+
+spring:
+  jackson:
+    default-property-inclusion: non_null
+
+

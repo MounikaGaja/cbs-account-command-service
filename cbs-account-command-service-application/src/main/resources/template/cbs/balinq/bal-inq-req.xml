@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FIXML xsi:schemaLocation="http://www.finacle.com/fixml CustInq.xsd" xmlns="http://www.finacle.com/fixml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Header>
+		<RequestHeader>
+			<MessageKey>
+				<RequestUUID>Req_1522800594815</RequestUUID>
+				<ServiceRequestId>BalInq</ServiceRequestId>
+				<ServiceRequestVersion>10.2</ServiceRequestVersion>
+				<ChannelId>COR</ChannelId>
+				<LanguageId></LanguageId>
+			</MessageKey>
+			<RequestMessageInfo>
+				<BankId>01</BankId>
+				<TimeZone></TimeZone>
+				<EntityId></EntityId>
+				<EntityType></EntityType>
+				<ArmCorrelationId></ArmCorrelationId>
+				<MessageDateTime>2023-02-23T15:53:14.815</MessageDateTime>
+			</RequestMessageInfo>
+			<Security>
+			<Token>
+				<PasswordToken>
+					<UserId></UserId>
+					<Password></Password>
+				</PasswordToken>
+				</Token>
+				<FICertToken></FICertToken>
+				<RealUserLoginSessionId></RealUserLoginSessionId>
+				<RealUser></RealUser>
+				<RealUserPwd></RealUserPwd>
+				<SSOTransferToken></SSOTransferToken>
+			</Security>
+		</RequestHeader>
+	</Header>
+	<Body>
+		<BalInqRequest>
+			
+		</BalInqRequest>
+	</Body>
+</FIXML>
+
+
+
+
